@@ -38,7 +38,7 @@ Example:
 If the device name is `Silicon Labs CP210x USB to UART Bridge` the `-DeviceName` option can be ommitted.
 
 ## Creating a symlink for the ESP32 device
-Whenever a USB device gets attached it is assigned a different device id. Therefore the device cannot be referenced easily in the `devcontainer.json`.
+Whenever a USB device gets attached it is potentially assigned a different bus id and device id. Therefore the device cannot be referenced easily in the `devcontainer.json`.
 By running the following command as `root` inside WSL, a persistent symlink (`/dev/esp32`) is created, making it easier to identify and access the device by a consistent name regardless of which USB port it is connected to.
 ```shell
 sh scripts/set-usb-serial-rule.sh <device name>

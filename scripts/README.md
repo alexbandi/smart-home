@@ -65,3 +65,14 @@ Bus 001 Device 002: ID 10c4:ea60 Silicon Labs CP210x UART Bridge
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```
 You should find your device in the list, e. g. `Silicon Labs CP210x UART Bridge`. The bus `001` and the device `002` are required later
+
+# Creating a symlink for a USB device
+Whenever a USB device gets attached it is potentially assigned a different bus id and device id. Therefore the device cannot be referenced easily in the `devcontainer.json`.
+The vendor id and product id though, stay the same. By creating a udev rule, we can create a symlink of the device such that it can be referenced by the same device independent of the Bus id and device id.
+So instead of being required to reference the device via `/dev/bus/usb/<bus id>/<device id>`, we can reference it statically, e. g. via `/dev/esp32`.
+This can be realized by adding the following line to `/etc/udev/rules.d/99-usb-serial.rules`
+```
+SUBSYSTEM=="usb", ATTR{idVendor}=="<vendor id>", ATTR{idProduct}=="<product id>", SYMLINK+="<device name>"
+
+```
+where `<vendor id>` and `<product id>` are the ids found when using `lsusb` (e. g. `10c4:ea60` where `10c4` ist the vendor id and `ea60` is the product id) and `<device name>` the desired symlink (e. g. `esp32`).
