@@ -36,3 +36,22 @@ Example:
 .\scripts\AttachUsbToWsl.ps1 -DeviceName "Silicon Labs CP210x USB to UART Bridge"
 ```
 If the device name is `Silicon Labs CP210x USB to UART Bridge` the `-DeviceName` option can be ommitted.
+
+## Creating a symlink for the ESP32 device
+Whenever a USB device gets attached it is assigned a different device id. Therefore the device cannot be referenced easily in the `devcontainer.json`.
+By running the following command as `root` inside WSL, a persistent symlink (`/dev/esp32`) is created, making it easier to identify and access the device by a consistent name regardless of which USB port it is connected to.
+```shell
+sh scripts/set-usb-serial-rule.sh <device name>
+```
+Replace `<device name>` with the name of the device found when running
+```shell
+lsusb
+```
+If ommitted, `Silicon Labs CP210x UART Bridge` is used.
+
+## Troubleshooting
+### Failed to send reload request: No such file or directory
+If the error message `Failed to send reload request: No such file or directory` shows up when running `set-usb-serial-rule.sh` probably the udev deamon is not running. Start it manually with 
+```shell
+/lib/systemd/systemd-udevd --daemon
+```
