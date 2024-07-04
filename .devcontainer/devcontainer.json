@@ -14,5 +14,6 @@
 				"platformio.platformio-ide"
 			]
 		}
-	}
+	},
+	"containerUser": "vscode"
 }
