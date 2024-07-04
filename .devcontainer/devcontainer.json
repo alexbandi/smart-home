@@ -6,5 +6,13 @@
 	"mounts": [
 	  "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 	],
-	"workspaceFolder": "/workspace"
+	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-azuretools.vscode-docker",
+				"platformio.platformio-ide"
+			]
+		}
+	}
 }

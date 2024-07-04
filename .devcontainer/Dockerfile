@@ -2,8 +2,9 @@ FROM alpine:3.20.1
 
 # Install necessary packages
 RUN apk add --no-cache \
-    git 
-
+    git \
+    python3
+    
 # Set the user to avoid permission issues
 RUN adduser -D vscode
 USER vscode
