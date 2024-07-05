@@ -37,21 +37,7 @@ Example:
 ```
 If the device name is `Silicon Labs CP210x USB to UART Bridge` the `-DeviceName` option can be ommitted.
 
-## Creating a symlink for the ESP32 device
-Whenever a USB device gets attached it is potentially assigned a different bus id and device id. Therefore the device cannot be referenced easily in the `devcontainer.json`.
-By running the following command as `root` inside WSL, a persistent symlink (`/dev/esp32`) is created, making it easier to identify and access the device by a consistent name regardless of which USB port it is connected to.
-```shell
-sh scripts/set-usb-serial-rule.sh <device name>
-```
-Replace `<device name>` with the name of the device found when running
-```shell
-lsusb
-```
-If ommitted, `Silicon Labs CP210x UART Bridge` is used.
+In WSL2 you should now find your device at `/dev/ttyUSB0`.
 
-## Troubleshooting
-### Failed to send reload request: No such file or directory
-If the error message `Failed to send reload request: No such file or directory` shows up when running `set-usb-serial-rule.sh` probably the udev deamon is not running. Start it manually with 
-```shell
-/lib/systemd/systemd-udevd --daemon
-```
+_Remark:_ \
+_If the device does not show up you might need to manually start the USB-to-serial driver that corresponds to the USB-to-serial chip on the ESP32 board. Most ESP32 boards, including the DevKitC V4, use either the CP210x or the CH340G USB-to-serial converter chips. Start the CP210xdriver in WSL2 by running `sudo modprobe cp210x` or use another driver if necessary._
