@@ -17,5 +17,6 @@
 				"platformio.platformio-ide"
 			]
 		}
-	}
+	},
+	"containerUser": "ubuntu"
 }
