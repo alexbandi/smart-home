@@ -5,6 +5,7 @@
 void Log::init()
 {
     Serial.begin(115200);
+    info("Log successfully initialised.");
 }
 
 void Log::log(LogLevel logLevel, const char *message, va_list args)
