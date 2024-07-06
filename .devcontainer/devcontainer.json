@@ -6,6 +6,9 @@
 	"mounts": [
 	  "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 	],
+	"runArgs": [
+		"--device=/dev/ttyUSB0:/dev/ttyUSB0"
+	],
 	"workspaceFolder": "/workspace",
 	"customizations": {
 		"vscode": {
@@ -14,6 +17,5 @@
 				"platformio.platformio-ide"
 			]
 		}
-	},
-	"containerUser": "vscode"
+	}
 }

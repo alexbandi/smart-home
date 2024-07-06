@@ -1,26 +1,21 @@
-FROM alpine:3.20.1
+FROM ubuntu:24.04
 
-# Arguments for user details
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-# Install necessary packages
-RUN apk add --no-cache \
+# Update the package list and install necessary packages
+RUN apt-get update && apt-get install -y \
+    curl \
     git \
-    python3
+    python3 \
+    python3-venv \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set the user to avoid permission issues
-RUN addgroup -g $USER_GID $USERNAME \ 
-    && adduser -u $USER_UID -G $USERNAME -s /bin/sh -D $USERNAME
-# Set the default user
-USER vscode
-    
-# Install PlatformIO Core (CLI)
+## Install PlatformIO Core (CLI)
 # See https://docs.platformio.org/en/latest/core/installation/methods/installer-script.html
-RUN wget -O /tmp/get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py \
+RUN curl -fsSL -o /tmp/get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py \
     && python3 /tmp/get-platformio.py \
     && rm /tmp/get-platformio.py
 
-# Set the working directory
+# Add PlatformIO to the PATH variable
+ENV PATH="/home/vscode/.platformio/penv/bin:${PATH}"
+
+# # Set the working directory
 WORKDIR /workspace
