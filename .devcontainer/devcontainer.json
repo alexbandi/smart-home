@@ -7,7 +7,7 @@
 	  "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 	],
 	"runArgs": [
-		"--device=/dev/esp32:/dev/ttyUSB0"
+		"--device=/dev/ttyUSB0:/dev/ttyUSB0"
 	],
 	"workspaceFolder": "/workspace",
 	"customizations": {
@@ -17,6 +17,5 @@
 				"platformio.platformio-ide"
 			]
 		}
-	},
-	"containerUser": "vscode"
+	}
 }
