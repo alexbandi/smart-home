@@ -41,3 +41,12 @@ In WSL2 you should now find your device at `/dev/ttyUSB0`.
 
 _Remark:_ \
 _If the device does not show up you might need to manually start the USB-to-serial driver that corresponds to the USB-to-serial chip on the ESP32 board. Most ESP32 boards, including the DevKitC V4, use either the CP210x or the CH340G USB-to-serial converter chips. Start the CP210xdriver in WSL2 by running `sudo modprobe cp210x` or use another driver if necessary._
+
+### Creating a udev rule for the right permissions
+For the development container to be able to access the device, the correct permissions have to be set. By defining a udev rule those permissions can be set automatically for every device with the same vendor and product id.
+
+To set the rule, run
+```shell
+sh scripts/create_udev_rule.sh <device name>
+```
+in your WSL2 shell where `<device name>` is the name listed when using `lsusb`. If the device name is `Silicon Labs CP210x UART Bridge` the device name can be ommited.
