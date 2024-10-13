@@ -4,6 +4,9 @@
 #include "driver/i2c.h"
 #include "esp_log.h"
 
+#include "memory.h"
+#include "wifi.h"
+
 #define I2C_MASTER_SCL_IO GPIO_NUM_22 /*!< GPIO number used for I2C master clock */
 #define I2C_MASTER_SDA_IO GPIO_NUM_21 /*!< GPIO number used for I2C master data  */
 #define I2C_MASTER_NUM I2C_NUM_1      /*!< I2C master i2c port number */
@@ -82,8 +85,11 @@ static esp_err_t sht35_read_temp_hum(float *temperature, float *humidity)
     return ESP_OK;
 }
 
-extern "C" void app_main(void)
+void app_main(void)
 {
+    initMemory();
+    wifi_init_sta();
+
     ESP_ERROR_CHECK(i2c_master_init());
 
     float temperature, humidity;
