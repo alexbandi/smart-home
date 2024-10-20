@@ -6,6 +6,7 @@
 
 #include "memory.h"
 #include "wifi.h"
+#include "mqtt.h"
 
 #define I2C_MASTER_SCL_IO GPIO_NUM_22 /*!< GPIO number used for I2C master clock */
 #define I2C_MASTER_SDA_IO GPIO_NUM_21 /*!< GPIO number used for I2C master data  */
@@ -89,6 +90,7 @@ void app_main(void)
 {
     initMemory();
     wifi_init_sta();
+    mqtt_app_start();
 
     ESP_ERROR_CHECK(i2c_master_init());
 
