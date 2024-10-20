@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "freertos.h": "c",
-        "esp_idf_lib_helpers.h": "c"
-    }
-}
