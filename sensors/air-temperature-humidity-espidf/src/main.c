@@ -3,6 +3,7 @@
 #include "freertos/task.h"
 #include "driver/i2c.h"
 #include "esp_log.h"
+#include <cJSON.h>
 
 #include "memory.h"
 #include "wifi.h"
@@ -18,6 +19,8 @@
 
 #define SHT35_SENSOR_ADDR 0x44   /*!< SHT35 sensor address */
 #define SHT35_CMD_READOUT 0x2C06 /*!< SHT35 readout command */
+
+#define MQTT_TOPIC  "air"
 
 static const char *TAG = "Sht35";
 
@@ -89,8 +92,8 @@ static esp_err_t sht35_read_temp_hum(float *temperature, float *humidity)
 void app_main(void)
 {
     initMemory();
-    wifi_init_sta();
-    mqtt_app_start();
+    wifi_init();
+    mqtt_init();
 
     ESP_ERROR_CHECK(i2c_master_init());
 
@@ -100,6 +103,12 @@ void app_main(void)
         if (sht35_read_temp_hum(&temperature, &humidity) == ESP_OK)
         {
             ESP_LOGI(TAG, "Temperature: %.2f°C, Humidity: %.2f%%", temperature, humidity);
+            cJSON *root = cJSON_CreateObject();
+            cJSON_AddNumberToObject(root, "temperature", temperature);
+            cJSON_AddNumberToObject(root, "humidity", humidity);
+            const char *jsonString = cJSON_PrintUnformatted(root);
+            mqtt_publish(MQTT_TOPIC, jsonString);
+            cJSON_Delete(root);
         }
         else
         {
