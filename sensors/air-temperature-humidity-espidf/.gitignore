@@ -1,4 +1,5 @@
 .pio
+.vscode
 
 # Ignore auto-generated sdkconfig files
 sdkconfig.esp32dev
